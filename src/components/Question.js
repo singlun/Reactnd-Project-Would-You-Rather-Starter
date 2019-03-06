@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { formatDate } from '../utils/helpers'
 
 class Question extends Component {
   render() {
 
-    const { question, user, page, displayQuestion, switchChecked } = this.props
+    const { question, user, page, displayQuestion, switchChecked, autheduser } = this.props
     
     const  rowWidth  = (page === "Dashboard") ? "col-md-4" : "col-md-6"
     const  itemWidth  = "col-md-12 single-item noPadding"
@@ -20,9 +21,11 @@ class Question extends Component {
       titlecolor  = "top notselectedtitle"
     } 
 
+    //pageDisplay = (switchChecked === "true" || switchChecked === true) ? "Result" : "Question";
+
     return (                                      
             <div className={rowWidth}>
-            <Link to ={`/Quest/${question.id}/${pageDisplay}/${switchChecked}`}>
+            <Link to ={`/Quest/${question.id}/${(switchChecked === "true" || switchChecked === true) ? "Result" : "Question"}/${switchChecked}`}>
                     <div className={itemWidth}>  
 
                         {(page === "Dashboard") && 
@@ -35,11 +38,11 @@ class Question extends Component {
                         {(page === "Question" || page === "Result") && 
                                 ( 
                                   (displayQuestion === "one") ?                                
-                                      <div className={(user.answers[question.id] === "optionOne") ? "top selectedtitle" : "top notselectedtitle"}>
+                                      <div className={(autheduser.answers[question.id] === "optionOne") ? "top selectedtitle" : "top notselectedtitle"}>
                                          {(page === "Question") ?  `Choose Question - ${displayQuestion}` : `Question - ${displayQuestion}`}
                                       </div>                   
                                         :
-                                      <div className={(user.answers[question.id] === "optionTwo") ? "top selectedtitle" : "top notselectedtitle"}>
+                                      <div className={(autheduser.answers[question.id] === "optionTwo") ? "top selectedtitle" : "top notselectedtitle"}>
                                          {(page === "Question") ?  `Choose Question - ${displayQuestion}` : `Question - ${displayQuestion}`}
                                       </div>                                       
                                 )}                                                                      
@@ -49,10 +52,10 @@ class Question extends Component {
                             (
                             <div className="bottom">
                                 <div className="poll">1. {question.optionOne.text}.
-                                                         {(user.answers[question.id] === "optionOne") ? <span className="typicons-tick small-selected"></span> : ""}
+                                                         {(autheduser.answers[question.id] === "optionOne") ? <span className="typicons-tick small-selected"></span> : ""}
                                 </div><br/><br/><br/>                                          
                                 <div className="poll2">2. {question.optionTwo.text}.
-                                                          {(user.answers[question.id] === "optionTwo") ? <span className="typicons-tick small-selected"></span> : ""}
+                                                          {(autheduser.answers[question.id] === "optionTwo") ? <span className="typicons-tick small-selected"></span> : ""}
                                 </div>                                                    
                             </div>                        
                             )}
@@ -84,7 +87,7 @@ class Question extends Component {
                           )}                            
 
                             <div className="poll-footer">
-                                <img src={user.avatarURL} width="70px" /><span className="submitInfo">Submitted on Jan-20-2019</span>
+                                <img src={user.avatarURL} width="70px" /><span className="submitInfo">Submitted on {formatDate(question.timestamp)}</span>
                             </div>                        
 
 
@@ -111,7 +114,8 @@ function mapStateToProps ({autheduser, users, questions}, { id, page, switchChec
     return {
       autheduser,
       question: question,
-      user: users[autheduser],
+      user: users[question.author],
+      autheduser: users[autheduser],
       page: page,
       switchChecked: switchChecked,
     }

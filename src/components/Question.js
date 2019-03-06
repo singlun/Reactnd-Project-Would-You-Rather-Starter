@@ -4,6 +4,12 @@ import { Link } from 'react-router-dom';
 import { formatDate } from '../utils/helpers'
 
 class Question extends Component {
+
+
+  handleSubmit(e){
+    alert(e.target.id)
+  }
+
   render() {
 
     const { question, user, page, displayQuestion, switchChecked, autheduser } = this.props
@@ -91,16 +97,16 @@ class Question extends Component {
                             </div>                        
 
 
-                        {/* {(page !== "Dashboard") && 
+                        {(page === "Question") && 
                             ((displayQuestion === "one") ?                                
-                              <div className='poll-footer'>
-                                  <span className={(user.answers[question.id] === "optionOne") ? "typicons-tick selected" : "typicons-tick notselected"}></span>  
+                              <div className='poll-base'>
+                                  <button id="optionOne" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}>Click to Choose</button>
                               </div>                   
                                 :
-                              <div className='poll-footer'>
-                                <span className={(user.answers[question.id] === "optionTwo") ? "typicons-tick selected" : "typicons-tick notselected"}></span>  
+                              <div className='poll-base'>
+                                <button id="optionTwo" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}>Click to Choose</button>
                               </div>   
-                            )} */}
+                            )}
                     </div>
               </Link> 
             </div>

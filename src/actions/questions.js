@@ -4,6 +4,7 @@ import {showLoading, hideLoading} from 'react-redux-loading'
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
 export const TOOGLE_QUESTION = 'TOOGLE_QUESTION'
 export const ADD_QUESTION = 'ADD_QUESTION'
+export const ADD_USER_QUESTION = 'ADD_USER_QUESTION'
 
 export function receiveQuestions (questions) {
     return {
@@ -19,6 +20,14 @@ function addQuestion (questions) {
   } 
 }
 
+function addUserQuestion (users, questions) {
+  return {
+    type: ADD_USER_QUESTION,
+    users,
+    questions,
+  } 
+}
+
 export function handleAddQuestion (optionOneText, optionTwoText, autheduser) {
   return (dispatch) => {
     dispatch(showLoading())
@@ -29,6 +38,9 @@ export function handleAddQuestion (optionOneText, optionTwoText, autheduser) {
     }).then((Question) => 
       //console.log('Question', Question)
        dispatch(addQuestion(Question))
+      ).then((Question) => 
+      //console.log('New Question',  Question.questions.id)
+      dispatch(addUserQuestion(autheduser, Question.questions.id))
       )
       .then(() => dispatch(hideLoading()))
   }

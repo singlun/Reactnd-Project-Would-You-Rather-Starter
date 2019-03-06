@@ -43,7 +43,7 @@ body {
 	margin-bottom: 20px;
 	border: solid 1px silver;
 	box-shadow: 0 0 5px gray;
-	height: 380px;
+	height: 430px;
 }
 
 .poll{
@@ -125,6 +125,15 @@ body {
 	width:	100%;
 	height: 80px;	
 	top: 300px;
+	text-align: center;
+	/* border: 3px	solid; */
+}
+
+.poll-base{
+	position: absolute;
+	width:	100%;
+	height: 80px;	
+	top: 381px;
 	text-align: center;
 	/* border: 3px	solid; */
 }

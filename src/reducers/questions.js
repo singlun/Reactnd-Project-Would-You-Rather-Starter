@@ -5,20 +5,11 @@ export function questions (state = {}, action) {
       case RECEIVE_QUESTIONS :
         return {...state, ...action.questions}
       case ADD_QUESTION :
-          const {questions}  = action
-          // const optionOne = { "optionOne" : {"votes": [],
-          //                                "text": action.questions.optionOne.text,
-          //                               }
-          //                             }
-          // const optionTwo = { "optionOne" : {"votes": [],
-          //                               "text": action.questions.optionTwo.text,
-          //                               }
-          //                             } 
-          // const overAll = {optionOne,optionTwo}                                                    
+          const {questions}  = action                                                 
           return {
             ...state,
             [questions.id] : questions
-          }
+          }        
       default :
         return state
     }

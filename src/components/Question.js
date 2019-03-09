@@ -2,15 +2,37 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../utils/helpers'
+import { handleAddAnsQuestion } from '../actions/questions'
+import { Redirect } from 'react-router-dom'
 
 class Question extends Component {
 
+  state = {
+    toHome: false,
+  }
 
-  handleSubmit(e){
-    alert(e.target.id)
+  handleSubmit = (e,qid) =>{
+    let answer;
+    if (e.target.id === 'optionOne') {
+       answer = 'optionOne'
+    }
+    else {
+       answer = 'optionTwo'      
+    }
+    const {dispatch, autheduser} = this.props
+
+    dispatch(handleAddAnsQuestion(autheduser.id, qid, answer))  
+
+    this.setState(() => ({
+      toHome: true,
+    }))      
   }
 
   render() {
+
+    if (this.state.toHome === true) {
+      return <Redirect to='/' />
+    }       
 
     const { question, user, page, displayQuestion, switchChecked, autheduser } = this.props
     
@@ -26,6 +48,18 @@ class Question extends Component {
       pageDisplay  = "Question"
       titlecolor  = "top notselectedtitle"
     } 
+
+    const questionId = question.id
+
+    const noOfOptionOneVotes = question.optionOne.votes.length
+    const noOfOptionTwoVotes = question.optionTwo.votes.length
+    let pertageOneOption = ((parseInt(noOfOptionOneVotes) / (parseInt(noOfOptionOneVotes) + parseInt(noOfOptionTwoVotes))) * 100).toFixed(2)
+    let pertageTwoOption = ((parseInt(noOfOptionTwoVotes) / (parseInt(noOfOptionOneVotes) + parseInt(noOfOptionTwoVotes))) * 100).toFixed(2)
+
+    if (pertageOneOption === 'NaN' || pertageTwoOption === 'NaN'){
+      pertageOneOption = 0
+      pertageTwoOption = 0
+    }
 
     //pageDisplay = (switchChecked === "true" || switchChecked === true) ? "Result" : "Question";
 
@@ -66,29 +100,41 @@ class Question extends Component {
                             </div>                        
                             )}
 
-                          {(page === "Result") && 
-                            ((displayQuestion === "one") ?                                
+                          {(page === "Result") && (                              
                                   <div className="bottom">
                                       <div className='poll'>{(displayQuestion === "one") ? question.optionOne.text : question.optionTwo.text}
-                                                            {(user.answers[question.id] === "optionOne") ? <span className="typicons-tick small-selected"></span> : ""}
-                                      </div><br></br>                                         
-                                      <div className='clearfix'></div>                                                   
-                                  </div>                  
-                                :
-                                  <div className="bottom">
-                                      <div className='poll'>{(displayQuestion === "two") ? question.optionOne.text : question.optionTwo.text}
-                                                            {(user.answers[question.id] === "optionTwo") ? <span className="typicons-tick small-selected"></span> : ""}
-                                      </div><br></br>                                         
-                                  <div className='clearfix'></div>                                                   
-                            </div>  
+                                                            {
+                                                              (displayQuestion === "one") ?
+                                                                    
+                                                                      (autheduser.answers[question.id] === "optionOne") ?
+                                                                              <span className="typicons-tick selected"> (Over all Votes {noOfOptionOneVotes} / {pertageOneOption}%)</span>
+                                                                           :  
+                                                                          <span>(Over all Votes {noOfOptionOneVotes} / {pertageOneOption}%)</span>                                                                    
+                                                                  :
+                                                                    (autheduser.answers[question.id] === "optionTwo") ? 
+                                                                          <span className="typicons-tick selected">(Over all Votes {noOfOptionTwoVotes} / {pertageTwoOption}%)</span> 
+                                                                          : 
+                                                                          <span>(Over all Votes {noOfOptionTwoVotes} / {pertageTwoOption}%)</span>                                                                    
+                                                            }
+                                      </div><br></br>                                                                                        
+                                  </div> 
                             )}
 
 
                           {(page === "Question") && (                              
                                   <div className="bottom">
-                                      <div className='poll'>{(displayQuestion === "one") ? question.optionOne.text : question.optionTwo.text}                                                         
-                                      </div><br></br>                                         
-                                      <div className='clearfix'></div>                                                   
+                                      <div className='poll'>
+                                          {(displayQuestion === "one") ?
+                                            <span>
+                                               {question.optionOne.text }
+                                               (Over all Votes {noOfOptionOneVotes} / {pertageOneOption}%)
+                                            </span>
+                                          : 
+                                            <span>
+                                               {question.optionTwo.text}
+                                               (Over all Votes {noOfOptionTwoVotes} / {pertageTwoOption}%)                                       
+                                            </span>}
+                                      </div><br></br>                                                                                          
                                   </div>                  
                           )}                            
 
@@ -100,11 +146,11 @@ class Question extends Component {
                         {(page === "Question") && 
                             ((displayQuestion === "one") ?                                
                               <div className='poll-base'>
-                                  <button id="optionOne" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}>Click to Choose</button>
+                                  <button id="optionOne" className="btn btn-success" onClick={(e) => this.handleSubmit(e,questionId)}>Click to Choose</button>
                               </div>                   
                                 :
                               <div className='poll-base'>
-                                <button id="optionTwo" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}>Click to Choose</button>
+                                <button id="optionTwo" className="btn btn-success" onClick={(e) => this.handleSubmit(e,questionId)}>Click to Choose</button>
                               </div>   
                             )}
                     </div>
@@ -118,7 +164,6 @@ function mapStateToProps ({autheduser, users, questions}, { id, page, switchChec
     const question = questions[id]
     
     return {
-      autheduser,
       question: question,
       user: users[question.author],
       autheduser: users[autheduser],

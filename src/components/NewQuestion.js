@@ -75,7 +75,7 @@ class NewQuestion extends Component {
                                                             placeholder='Question 1'
                                                             onChange={(e1) => this.handleChange(e1)}
                                                             value={text1} 
-                                                            maxLength ={100}
+                                                            maxLength ={75}
                                                             className = 'form-control'
                                                             required
                                                             />                                                    
@@ -90,7 +90,7 @@ class NewQuestion extends Component {
                                                             placeholder='Question 2'
                                                             onChange={(e2) => this.handleChange(e2)}
                                                             value={text2} 
-                                                            maxLength ={100}
+                                                            maxLength ={75}
                                                             className = 'form-control'
                                                             required
                                                             />   

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
 import LoadingBar from 'react-redux-loading'
-import Nav from './Nav';
+import NavItem from './NavItem';
 import Dashboard from './Dashboard';
+import Leaderboard from './Leaderboard';
 import Quest from './Quest';
 import NewQuestion from './NewQuestion';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
@@ -26,32 +27,38 @@ class App extends Component {
     return (
       <Router>
         <React.Fragment>
-          <LoadingBar />
-            <Nav />
+          <LoadingBar />            
             {this.props.loading === true
               ? null
-              : <div>
-                  <Route exact path='/' render={() => (
-                    <Dashboard
-                    switchChecked={this.state.isSwitchChecked}
-                    onSwitchChange={this.onSwitchChange}
-                    page={'Dashboard'}/>
-                  )} />
-                  
-                  <Route exact path='/Quest/:id/:page/:switchChecked' component={Quest} />
-                  
-                  <Route exact path='/NewQuestion' component={NewQuestion} />
-                          
-                </div>}
+              : 
+                <div>
+                  <NavItem/>
+                    <div>
+                      <Route exact path='/' render={() => (
+                        <Dashboard
+                        switchChecked={this.state.isSwitchChecked}
+                        onSwitchChange={this.onSwitchChange}
+                        page={'Dashboard'}/>
+                      )} />
+                      
+                      <Route exact path='/Quest/:id/:page/:switchChecked' component={Quest} />
+                      
+                      <Route exact path='/NewQuestion' component={NewQuestion} />                              
+
+                      <Route exact path='/Leaderboard' component={Leaderboard} /> 
+                    </div>
+                </div>
+            }
         </React.Fragment>
       </Router>
     )
   }
 }
 
-function mapStateToProps ({ autheduser }) {
+function mapStateToProps ({ autheduser, users }) {
   return {
     loading: autheduser === null,
+    user: users[autheduser],   
   }
 }
 

@@ -5,19 +5,23 @@ import { Link } from 'react-router-dom';
 
 
 class Dashboard extends Component {
+    
         
   render() {
-
+        
     return (
            <div className="container"> 
                 <div className="row">                        
                         <div className="col-md-11">
                                 <div className={"switch-item noPadding"}>  
-                                        <label className="comp-switch">
-                                                <input type="checkbox" onChange={this.props.onSwitchChange} />         
-                                                <span id="knob" className={"slider round"}></span>
-                                        </label>                                                                                    
-                                </div> 
+                                        <div class="onoffswitch">
+                                                <input type="checkbox" checked={this.props.switchChecked} name="onoffswitch"  onChange={this.props.onSwitchChange} class="onoffswitch-checkbox" id="myonoffswitch" />
+                                                <label class="onoffswitch-label" for="myonoffswitch">
+                                                        <span class="onoffswitch-inner"></span>
+                                                        <span class="onoffswitch-switch"></span>
+                                                </label>
+                                        </div>
+                                </div>                                
                         </div>
                         <div className="col-md-1">                                
                                 <Link to='/NewQuestion'><span className="iconicstroke-document-alt-stroke"></span></Link> 

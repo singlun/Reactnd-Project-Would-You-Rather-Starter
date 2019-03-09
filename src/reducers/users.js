@@ -1,5 +1,5 @@
 import {RECEIVE_USERS}  from '../actions/users'
-import {ADD_USER_QUESTION}  from '../actions/questions'
+import {ADD_USER_QUESTION, ADD_USER_ANS}  from '../actions/questions'
 
 export function users (state = {}, action) {
     switch(action.type) {
@@ -17,8 +17,27 @@ export function users (state = {}, action) {
         return {
           ...state,
           ...userQuestions,
-        }          
+        } 
+      case ADD_USER_ANS :
+        const {authedUser, qid, answer}  = action        
+        
+        const usersAns = {
+          ...state,
+          [authedUser]: {
+            ...state[authedUser],
+            answers: {
+              ...state[authedUser].answers,
+              [qid]: answer
+            }
+          }
+        }
+        return {
+          ...usersAns
+        }                 
       default :
         return state
     }
   }
+
+
+

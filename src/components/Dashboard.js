@@ -4,21 +4,19 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 
 
-class Dashboard extends Component {
-    
-        
-  render() {
+class Dashboard extends Component {        
+  render() {    
         
     return (
            <div className="container"> 
                 <div className="row">                        
                         <div className="col-md-11">
                                 <div className={"switch-item noPadding"}>  
-                                        <div class="onoffswitch">
-                                                <input type="checkbox" checked={this.props.switchChecked} name="onoffswitch"  onChange={this.props.onSwitchChange} class="onoffswitch-checkbox" id="myonoffswitch" />
-                                                <label class="onoffswitch-label" for="myonoffswitch">
-                                                        <span class="onoffswitch-inner"></span>
-                                                        <span class="onoffswitch-switch"></span>
+                                        <div className="onoffswitch">
+                                                <input type="checkbox" checked={this.props.switchChecked} name="onoffswitch"  onChange={this.props.onSwitchChange} className="onoffswitch-checkbox" id="myonoffswitch" />
+                                                <label className="onoffswitch-label" for="myonoffswitch">
+                                                        <span className="onoffswitch-inner"></span>
+                                                        <span className="onoffswitch-switch"></span>
                                                 </label>
                                         </div>
                                 </div>                                
@@ -61,6 +59,7 @@ function mapStateToProps ({ autheduser, users, questions }, { switchChecked, onS
           switchChecked : switchChecked, 
           onSwitchChange: onSwitchChange,
           page: page,
+          autheduser: autheduser,
         }
 }
       

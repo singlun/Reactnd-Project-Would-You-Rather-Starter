@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 class Leaderboard extends Component {
 
   render() {
-
+    const {keysSorted} = this.props
     return (
           <div className='container'>
                     <div className='row'>                                                             
@@ -15,8 +15,8 @@ class Leaderboard extends Component {
                                         LeaderBoard
                                 </div> 
                             </div>
-                            {Object.keys(this.props.users).map((id, key) => (
-                                  <Leaderitem id={id} key={key} />
+                            {keysSorted.map((uid, key) => (
+                                  <Leaderitem id={uid.id} key={key} />
                             ))}
                         </div>                                                
                     </div>                
@@ -27,8 +27,17 @@ class Leaderboard extends Component {
 
 function mapStateToProps ({ users }) {
 
+  let prepairedObj = {};
+
+  prepairedObj = Object.keys(users).map(u => { 
+    return {'id' : u, 'Sum' : users[u].questions.length + Object.keys(users[u].answers).length}
+  })
+
+  let keysSorted = Object.keys(prepairedObj).sort(function(a,b){return prepairedObj[b].Sum-prepairedObj[a].Sum}).map(key => prepairedObj[key])
+
   return {
-    users,   
+    users, 
+    keysSorted, 
   }
 }
 

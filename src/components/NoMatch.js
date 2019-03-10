@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 
 class NoMatch extends Component {
   render() {
-
-    // console.log(id, page, switchChecked)
+    
     return (
                 <div className="container">
                     <div className="row">

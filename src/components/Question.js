@@ -61,8 +61,7 @@ class Question extends Component {
       pertageTwoOption = 0
     }
 
-    //pageDisplay = (switchChecked === "true" || switchChecked === true) ? "Result" : "Question";
-
+    
     return (                                      
             <div className={rowWidth}>
             <Link to ={`/Quest/${question.id}/${(switchChecked === "true" || switchChecked === true) ? "Result" : "Question"}/${switchChecked}`}>
@@ -139,7 +138,7 @@ class Question extends Component {
                           )}                            
 
                             <div className="poll-footer">
-                                <img src={user.avatarURL} width="70px" /><span className="submitInfo">Submitted on {formatDate(question.timestamp)}</span>
+                                <img src={user.avatarURL} width="70px" /><span className="submitInfo">Question Created on {formatDate(question.timestamp)}</span>
                             </div>                        
 
 

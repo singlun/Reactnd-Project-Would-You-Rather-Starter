@@ -7,7 +7,6 @@ class Quest extends Component {
 
     const { id, page, switchChecked } = this.props.match.params
 
-    // console.log(id, page, switchChecked)
     return (
         <React.Fragment>
             <div className="container">            

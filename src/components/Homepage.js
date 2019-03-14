@@ -5,6 +5,7 @@ import NavItem from './NavItem';
 import Dashboard from './Dashboard';
 import Leaderboard from './Leaderboard';
 import Quest from './Quest';
+import Question from './Question';
 import NewQuestion from './NewQuestion';
 import NoMatch from './NoMatch';
 import { handleInitialData } from '../actions/shared'
@@ -44,19 +45,22 @@ class Homepage extends Component {
                     <div>
                         <Switch>                              
 
+                              <Route exact path='/questions/:question_id' component={Question} />
+
+                              {/* <Route exact path='/questions/:question_id' component={Quest} /> */}
+
+                              <Route exact path='/add' component={NewQuestion} />                              
+
+                              <Route exact path='/Leaderboard' component={Leaderboard} />                              
+
                               <Route exact path='/' render={() => (
                                 <Dashboard
                                 switchChecked={this.state.isSwitchChecked}
-                                onSwitchChange={this.onSwitchChange}
-                                page={'Dashboard'}/>
+                                onSwitchChange={this.onSwitchChange} />
                               )} />
-                              
-                              <Route exact path='/Quest/:id/:page/:switchChecked' component={Quest} />
-                              
-                              <Route exact path='/NewQuestion' component={NewQuestion} />                              
 
-                              <Route exact path='/Leaderboard' component={Leaderboard} /> 
                               <Route component={NoMatch} />
+
                         </Switch>
                     </div>
                 </div>                

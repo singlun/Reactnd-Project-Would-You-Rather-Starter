@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Question from "./Question";
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
+import Displayquestion from "./Displayquestion";
 
 
 class Dashboard extends Component {        
@@ -14,7 +15,7 @@ class Dashboard extends Component {
                                 <div className={"switch-item noPadding"}>  
                                         <div className="onoffswitch">
                                                 <input type="checkbox" checked={this.props.switchChecked} name="onoffswitch"  onChange={this.props.onSwitchChange} className="onoffswitch-checkbox" id="myonoffswitch" />
-                                                <label className="onoffswitch-label" for="myonoffswitch">
+                                                <label className="onoffswitch-label" htmlFor="myonoffswitch">
                                                         <span className="onoffswitch-inner"></span>
                                                         <span className="onoffswitch-switch"></span>
                                                 </label>
@@ -22,12 +23,12 @@ class Dashboard extends Component {
                                 </div>                                
                         </div>
                         <div className="col-md-1">                                
-                                <Link to='/NewQuestion'><span className="iconicstroke-document-alt-stroke"></span></Link> 
+                                <Link to='/add'><span className="iconicstroke-document-alt-stroke"></span></Link> 
                         </div>                                                        
                 </div>
                 <div className="row">  
                         {this.props.questionIds.map((id, key) => (
-                                <Question id={id} key={key} displayQuestion={'both'} page={this.props.page} switchChecked={this.props.switchChecked}/>
+                                        <Displayquestion id={id} key={key} page={'Dashboard'} />
                         ))}
                 </div>
             </div>
@@ -35,7 +36,7 @@ class Dashboard extends Component {
   }
 }
 
-function mapStateToProps ({ autheduser, users, questions }, { switchChecked, onSwitchChange, page }) {
+function mapStateToProps ({ autheduser, users, questions }, { switchChecked, onSwitchChange }) {
         const answered = switchChecked
         const user = users[autheduser]
         let answeredId = [];
@@ -58,7 +59,6 @@ function mapStateToProps ({ autheduser, users, questions }, { switchChecked, onS
             .sort((a,b) => questions[b].timestamp - questions[a].timestamp),
           switchChecked : switchChecked, 
           onSwitchChange: onSwitchChange,
-          page: page,
           autheduser: autheduser,
         }
 }

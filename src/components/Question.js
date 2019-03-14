@@ -38,14 +38,12 @@ class Question extends Component {
     
     const  rowWidth  = (page === "Dashboard") ? "col-md-4" : "col-md-6"
     const  itemWidth  = "col-md-12 single-item noPadding"
-    let pageDisplay, titlecolor 
+    let titlecolor 
 
-    if (switchChecked === 'true' || switchChecked === true) {
-      pageDisplay  = "Result"
+    if (switchChecked === true) {
       titlecolor  = "top selectedtitle"
     }
     else {
-      pageDisplay  = "Question"
       titlecolor  = "top notselectedtitle"
     } 
 
@@ -64,7 +62,7 @@ class Question extends Component {
     
     return (                                      
             <div className={rowWidth}>
-            <Link to ={`/Quest/${question.id}/${(switchChecked === "true" || switchChecked === true) ? "Result" : "Question"}/${switchChecked}`}>
+            
                     <div className={itemWidth}>  
 
                         {(page === "Dashboard") && 
@@ -153,21 +151,28 @@ class Question extends Component {
                               </div>   
                             )}
                     </div>
-              </Link> 
+             
             </div>
     )
   }
 }
 
-function mapStateToProps ({autheduser, users, questions}, { id, page, switchChecked }) {
-    const question = questions[id]
-    
+function mapStateToProps ({autheduser, users, questions}, props) {
+    {/*There is anther problem in reloading the page. Clicking the props can be recevie when
+      clicking the link  <Link to ={`/questions/${question.id}`}> from the Displayquestion component
+      but reloading the page cannot receive the props.*/}
+    const qid = props.match.params.question_id
+    const question = questions[qid]
+    const user = users[autheduser]
+    const answeredId = Object.keys(user.answers).filter(ua => ua === qid) 
+    const displayPage =  (answeredId.length > 0) ? 'Result' : 'Question'    
+        
     return {
       question: question,
       user: users[question.author],
       autheduser: users[autheduser],
-      page: page,
-      switchChecked: switchChecked,
+      page: displayPage,
+      switchChecked: (answeredId.length > 0) ? true : false,
     }
   }
   export default connect(mapStateToProps)(Question)

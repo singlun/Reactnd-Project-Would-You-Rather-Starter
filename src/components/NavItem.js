@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { handleLogOut } from '../actions/autheduser'
 
 class NavItem extends Component {
+
+    state = {
+        toHome : false,
+      }    
 
     handleSubmit = (e) =>{
         e.preventDefault();
@@ -14,10 +18,11 @@ class NavItem extends Component {
 
         sessionStorage.clear();
 
-        this.props.onLogOutChange();   
+        this.props.onLogOutChange(); 
+         
     }    
 
-render() { 
+render() {  
 
     const {user, autheduser} = this.props
 

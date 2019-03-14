@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Homepage from './Homepage';
 import Login from './Login';
 
@@ -17,14 +17,13 @@ class App extends Component {
   onLogOutChange = () => this.setState({isLoggedIn: false, key: !this.state.key});
 
    render() { 
-    
+
     return (
-      <Router>
-          {(this.state.isLoggedIn) ?
-              <Homepage key={this.state.key} onLogOutChange={this.onLogOutChange}/>
+          //((sessionStorage.getItem('AUTHED_ID') !== null) && (this.state.isLoggedIn === true))  ?
+          (sessionStorage.getItem('AUTHED_ID') !== null)  ?
+              <Homepage key={this.state.key} onLogOutChange={this.onLogOutChange} />
             :
-              <Login key={this.state.key} onLogInChange={this.onLogInChange}/>}
-      </Router>
+              <Login key={this.state.key} onLogInChange={this.onLogInChange}/>
     )
   }
 }

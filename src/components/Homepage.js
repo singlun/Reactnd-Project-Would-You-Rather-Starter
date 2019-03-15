@@ -4,12 +4,11 @@ import LoadingBar from 'react-redux-loading'
 import NavItem from './NavItem';
 import Dashboard from './Dashboard';
 import Leaderboard from './Leaderboard';
-import Quest from './Quest';
-import Question from './Question';
 import NewQuestion from './NewQuestion';
 import NoMatch from './NoMatch';
 import { handleInitialData } from '../actions/shared'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import Questdetail from './Questdetail';
 
 
 
@@ -43,11 +42,9 @@ class Homepage extends Component {
                 <div>
                   <NavItem onLogOutChange={this.onLogOutChange} />
                     <div>
-                        <Switch>                              
-
-                              <Route exact path='/questions/:question_id' component={Question} />
-
-                              {/* <Route exact path='/questions/:question_id' component={Quest} /> */}
+                        <Switch>                                                                                        
+                              <Route exact path='/questions/:question_id' component={Questdetail}/>                              
+                        
 
                               <Route exact path='/add' component={NewQuestion} />                              
 

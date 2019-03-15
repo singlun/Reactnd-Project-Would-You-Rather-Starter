@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import Question from "./Question";
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
-import Displayquestion from "./Displayquestion";
+import Displayquestion from "./Dashboardquestion";
 
 
 class Dashboard extends Component {        
@@ -28,7 +27,7 @@ class Dashboard extends Component {
                 </div>
                 <div className="row">  
                         {this.props.questionIds.map((id, key) => (
-                                        <Displayquestion id={id} key={key} page={'Dashboard'} />
+                                        <Displayquestion id={id} key={key} />
                         ))}
                 </div>
             </div>

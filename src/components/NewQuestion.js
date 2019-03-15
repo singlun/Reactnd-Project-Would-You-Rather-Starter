@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Question from './Question';
+import Question from './Questionitem';
 import { connect } from 'react-redux'
 import { handleAddQuestion } from '../actions/questions'
 import { Redirect } from 'react-router-dom'

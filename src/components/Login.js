@@ -10,6 +10,7 @@ class Login extends Component {
         const userName = document.getElementById('userName');
 
         sessionStorage.setItem('AUTHED_ID',userName.value);
+    
 
         this.props.onLogInChange();
       }

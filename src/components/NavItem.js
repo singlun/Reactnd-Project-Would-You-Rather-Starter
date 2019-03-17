@@ -37,7 +37,7 @@ render() {
             <div className="container-fluid">
                 <ul className={navUlStyle}>
                     <li className="nav-item">
-                                <img src={user.avatarURL} className="rounded-circle profile-width" alt="Your Pic"/>&nbsp;
+                                <img src={user.avatarURL} className="rounded-circle"  width="70px" alt="Your Pic"/>&nbsp;
                     </li>
                     <li className="nav-item">&nbsp;</li>
                     <li className="nav-item">

@@ -8,6 +8,7 @@ import NewQuestion from './NewQuestion';
 import NoMatch from './NoMatch';
 import { handleInitialData } from '../actions/shared'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import QuestionItem from './Questionitem';
 import Questdetail from './Questdetail';
 
 

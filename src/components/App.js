@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Homepage from './Homepage';
 import Login from './Login';
-
-
+import './App.css';
+import './switch.css';
 
 class App extends Component {
 
@@ -15,7 +15,9 @@ class App extends Component {
 
   onLogOutChange = () => this.setState({isLoggedIn: false, key: !this.state.key});
 
-   render() { 
+   render() {
+     
+    sessionStorage.setItem('pagereload','true');
 
     return (
           //((sessionStorage.getItem('AUTHED_ID') !== null) && (this.state.isLoggedIn === true))  ?
